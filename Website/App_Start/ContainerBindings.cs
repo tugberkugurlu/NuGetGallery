@@ -89,6 +89,10 @@ namespace NuGetGallery
                 .To<LuceneIndexingService>()
                 .InRequestScope();
 
+            Bind<INuGetExeDownloaderService>()
+                .To<NuGetExeDownloaderService>()
+                .InRequestScope();
+
             Lazy<IMailSender> mailSenderThunk = new Lazy<IMailSender>(() =>
             {
                 var settings = Kernel.Get<GallerySetting>();
@@ -136,9 +140,6 @@ namespace NuGetGallery
             {
                 case PackageStoreType.FileSystem:
                 case PackageStoreType.NotSpecified:
-                    Bind<IFileSystemService>()
-                        .To<FileSystemService>()
-                        .InSingletonScope();
                     Bind<IFileStorageService>()
                         .To<FileSystemFileStorageService>()
                         .InSingletonScope();
@@ -162,6 +163,10 @@ namespace NuGetGallery
                         .InSingletonScope();
                     break;
             }
+
+            Bind<IFileSystemService>()
+                .To<FileSystemService>()
+                .InSingletonScope();
 
             Bind<IPackageFileService>()
                 .To<PackageFileService>();
