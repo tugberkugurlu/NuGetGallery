@@ -148,13 +148,16 @@ namespace NuGetGallery
             return package;
         }
 
-        public IQueryable<Package> GetPackagesForListing()
+        public IQueryable<Package> GetPackagesForListing(bool includePrerelease)
         {
-            return packageRepo.GetAll()
+            var packages = packageRepo.GetAll()
                 .Include(x => x.PackageRegistration)
                 .Include(x => x.Authors)
                 .Include(x => x.PackageRegistration.Owners)
                 .Where(p => p.Listed);
+
+            return includePrerelease ? packages.Where(p => p.IsLatest) : 
+                                       packages.Where(p => p.IsLatestStable);
         }
 
         public IEnumerable<Package> FindPackagesByOwner(User user)

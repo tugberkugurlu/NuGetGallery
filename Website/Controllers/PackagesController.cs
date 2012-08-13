@@ -136,7 +136,7 @@ namespace NuGetGallery
                 page = 1;
             }
 
-            IQueryable<Package> packageVersions = packageSvc.GetPackagesForListing();
+            IQueryable<Package> packageVersions = packageSvc.GetPackagesForListing(prerelease);
 
             q = (q ?? "").Trim();
 
