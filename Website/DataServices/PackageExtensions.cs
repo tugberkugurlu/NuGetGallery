@@ -16,8 +16,6 @@ namespace NuGetGallery
         {
             siteRoot = EnsureTrailingSlash(siteRoot);
             return packages
-                     .WithoutNullPropagation()
-                     .WithoutVersionSort()
                      .Include(p => p.PackageRegistration)
                      .Select(p => new V1FeedPackage
                      {
@@ -56,8 +54,6 @@ namespace NuGetGallery
         {
             siteRoot = EnsureTrailingSlash(siteRoot);
             return packages
-                     .WithoutNullPropagation()
-                     .WithoutVersionSort()
                      .Include(p => p.PackageRegistration)
                      .Select(p => new V2FeedPackage
                      {
